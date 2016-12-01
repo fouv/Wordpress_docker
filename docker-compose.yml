@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+
+  mysql:
+    image: mysql
+    volumes:
+      - wordpress-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+  wordpress:
+    image: wordpress
+    volumes:
+     - ./wordpress:/var/www/html
+    ports:
+      - 8080:80
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_PASSWORD: password
+
+volumes:
+
+  wordpress-mysql:
