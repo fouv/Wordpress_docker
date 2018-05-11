@@ -1,25 +1,23 @@
 version: '2'
 
 services:
-
   mysql:
     image: mysql
+    restart: always
     volumes:
-      - wordpress-mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-
-  wordpress:
+      - ./wordpress:/var/lib/mysql
+    environment:  
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_ROOT_PASSWORD=895fa1sr
+      
+  wordpress: 
+    depends_on:
+     - mysql
     image: wordpress
     volumes:
      - ./wordpress:/var/www/html
     ports:
-      - 8080:80
-    depends_on:
-      - mysql
+      - 50:23
     environment:
-      WORDPRESS_DB_PASSWORD: password
-
-volumes:
-
-  wordpress-mysql:
+      - WORDPRESS_DB_PASSWORD=895fa1sr
+      
